@@ -9,39 +9,14 @@ class Api::V1::PoemsController < ApplicationController
   private
 
   def get_poems
-    url = 'http://poetrydb.org/title/lines'
+    url = 'http://poetrydb.org/author/William%20Shakespeare'
     response = HTTParty.get(url)
-
 
     parsed = response.parsed_response
 
-    parsed.map()
+    parsed.each do |poems|
+      Poem.create(title: poems["title"], lines: poems["lines"])
+    end
 
-    titles = response["titles"]
-    lines = response["lines"]
-    linecount = response["linecount"]
-
-
-
-
-      Poem.create(title: mappedTitles, lines: mappedLines, linecount: mappedLineCount)
-    # response.parsed_response
   end
-
 end
-
-  #
-  # hank = array.select do |poem|
-  #    poem[authors] === 'Alan Seeger'
-  # end
-  #
-  # hello.each do |poem|
-  #   poem.each do |attributes|
-  #      Poem.create(title: attributes["title"])
-  #      Poem.create(lines: attributes["lines"])
-  #      Poem.create(linecount: attributes["linecount"])
-  #    end
-  #  end
-
-
-# parsed_response = {{title} {author} {lines}}
