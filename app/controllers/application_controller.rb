@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   require 'httparty'
 
+def check_poems
+ Poem.all.length == 0
+end
+
 def get_poems
   url = 'http://poetrydb.org/author/William%20Shakespeare'
   response = HTTParty.get(url)
